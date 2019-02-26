@@ -64,7 +64,12 @@ BOOL initialized = NO;
 }
 
 - (void)_recordUnexpectedFailureWithDescription:(NSString *)description exception:(NSException *)exception {
-  [SPTCurrentSpec _recordUnexpectedFailureWithDescription:description exception:exception];
+  @try {
+    [SPTCurrentSpec _recordUnexpectedFailureWithDescription:description exception:exception];
+  } @catch (NSException *exception) {
+    XCTAssert(@"Test spec failed: %@", exception.debugDescription);
+    NSLog(@"Stacktrace: %@", exception.callStackSymbols);
+  }
 }
 
 - (_XCTestCaseImplementation *)internalImplementation {
