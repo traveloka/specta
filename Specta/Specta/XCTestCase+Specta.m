@@ -65,7 +65,7 @@
   
   @try {
     [self _recordUnexpectedFailureWithDescription:description exception:exception];
-  } @catch (NSException *exception) {
+  } @catch (NSException *e) {
     NSLog(@"Test spec failed: %@", exception.debugDescription);
     NSLog(@"Stacktrace: %@", exception.callStackSymbols);
     
