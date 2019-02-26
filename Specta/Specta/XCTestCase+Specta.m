@@ -62,7 +62,13 @@
       return;
     }
   }
-  [self _recordUnexpectedFailureWithDescription:description exception:exception];
+  
+  @try {
+    [self _recordUnexpectedFailureWithDescription:description exception:exception];
+  } @catch (NSException *exception) {
+    XCTAssert(@"Test spec failed: %@", exception.debugDescription);
+    NSLog(@"Stacktrace: %@", exception.callStackSymbols);
+  }
 }
 
 @end
